@@ -75,16 +75,28 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       drawer: Drawer(
-        child: Container(
-          width: 300,
-          color: Colors.orange,
-          padding: EdgeInsets.all(50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-            Text('this is app drawer')
-          ],),
-        ),
+        child:Container(
+          margin: EdgeInsets.only(top:50.0),
+          child: new ListView(padding: const EdgeInsets.only(), children: <Widget>[
+          new ClipRect(
+            child: new ListTile(
+              leading: new CircleAvatar(child: new Text("A")),
+              title: new Text('admin'),
+              onTap: () => {},
+            ),
+          ),
+          new ListTile(
+            leading: new CircleAvatar(child: new Text("S")),
+            title: new Text('Jay Chou'),
+            subtitle: new Text("Application about Jay Chou in flutter"),
+            onTap: () => {},
+          ),
+          new AboutListTile(
+            icon: new CircleAvatar(child: new Text("A")),
+            child: new Text("shmilyvidian"),
+          ),
+        ]),
+      ),
       ),
       body:  _widgetOptions[_selectedIndex] ,
       bottomNavigationBar: BottomNavigationBar(

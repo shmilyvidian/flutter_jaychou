@@ -65,6 +65,12 @@ class PersonSetting extends StatelessWidget{
               Container(
                 height: 300,
                 child: (
+                    Provider.of<Counter>(context).favorite.length == 0 ?
+                    Container(
+                      margin: EdgeInsets.only(top:8.0),
+                      alignment: Alignment.topLeft,
+                      child: Text('暂无喜欢，你可以从首页添加收藏哟。'),
+                    )  :
                     ListView.builder(
                         itemCount: Provider.of<Counter>(context).favorite.length,
                         itemBuilder: (BuildContext context, int index){
