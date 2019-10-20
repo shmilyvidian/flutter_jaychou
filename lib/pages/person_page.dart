@@ -63,7 +63,7 @@ class PersonSetting extends StatelessWidget{
                 ),
               ),
               Container(
-                height: 500,
+                height: 300,
                 child: (
                     ListView.builder(
                         itemCount: Provider.of<Counter>(context).favorite.length,

@@ -15,12 +15,13 @@ class Login extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: '登录',
       home: Scaffold(
-        body: Container(
+          resizeToAvoidBottomPadding: false, //输入框抵住键盘
+          body: Container(
             child:  Column(
               children: <Widget>[
                 Container(
                   child: Container(
-                    height: 160,
+                    height: 200,
                     alignment: Alignment.center,
                     decoration: new BoxDecoration(
                       color: Colors.blue,

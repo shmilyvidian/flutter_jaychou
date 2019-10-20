@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage>{
         onRefresh: () async {},
         displacement: 20.0,
         backgroundColor: Colors.blue,
-        child: ListView.builder(
+        child:  lists == null ? Center(child: Text('loading...'),) : ListView.builder(
           itemCount: lists == null ? 0 : lists.length,
           itemBuilder: (BuildContext context, int index){
             var item = lists[index];
