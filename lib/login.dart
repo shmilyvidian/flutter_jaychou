@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/pages/home.dart';
 import 'package:flutter_tutorial/stores/countModel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +16,9 @@ class Login extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: '登录',
       home: Scaffold(
-          resizeToAvoidBottomPadding: false, //输入框抵住键盘
+//          resizeToAvoidBottomPadding: false, //输入框抵住键盘
           body: Container(
+            child: SingleChildScrollView(
             child:  Column(
               children: <Widget>[
                 Container(
@@ -93,6 +95,14 @@ class Login extends StatelessWidget{
 
                                 user.setString('USERNAME', userController.text);
                                 user.setString('PASSWORD', passwordController.text);
+                                 Navigator.push(context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                        return Home();
+                                      },
+                                  ));
+
+
                                 store.login(userController.text, passwordController.text);
 
                               },
@@ -144,7 +154,7 @@ class Login extends StatelessWidget{
                 )
               ],
           )
-        )
+        ),)
       ),
     );
   }

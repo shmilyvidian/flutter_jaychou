@@ -6,6 +6,9 @@ import '../login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonPage extends StatelessWidget{
+  final BuildContext parentContext;
+  PersonPage({this.parentContext});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,12 +16,14 @@ class PersonPage extends StatelessWidget{
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: PersonSetting(),
+      home: PersonSetting(parentContext:this.parentContext),
     );
   }
 }
 
 class PersonSetting extends StatelessWidget{
+  final BuildContext parentContext;
+  PersonSetting( {this.parentContext});
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<Counter>(context);
@@ -63,18 +68,18 @@ class PersonSetting extends StatelessWidget{
                 ),
               ),
               Container(
-                height: 300,
+                height: 500,
                 child: (
-                    Provider.of<Counter>(context).favorite.length == 0 ?
+                    store.favorite.length == 0 ?
                     Container(
                       margin: EdgeInsets.only(top:8.0),
                       alignment: Alignment.topLeft,
                       child: Text('暂无喜欢，你可以从首页添加收藏哟。'),
                     )  :
                     ListView.builder(
-                        itemCount: Provider.of<Counter>(context).favorite.length,
+                        itemCount: store.favorite.length,
                         itemBuilder: (BuildContext context, int index){
-                          var item = Provider.of<Counter>(context).favorite[index];
+                          var item = store.favorite[index];
                           return(
                              Row(
                                crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,11 +123,22 @@ class PersonSetting extends StatelessWidget{
           SharedPreferences user = await SharedPreferences.getInstance();
           user.remove('USERNAMEW');
           user.remove('PASSWORD');
-          Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context){
-                return Login();
-              }
-            ));
+          store.setLogin(false);
+
+         Navigator.push(this.parentContext,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                        return Login();
+                                      },
+                                  ));
+
+
+
+//          Navigator.push(context, MaterialPageRoute(
+//              builder: (BuildContext context){
+//                return Login();
+//              }
+//            ));
           },
         child: Text('退出'),
       ) ,

@@ -27,9 +27,12 @@ class Counter with ChangeNotifier {//1
     _userInfo['password'] = password;
     notifyListeners();
   }
+  void setLogin(bool _loginStatus){
+    _isLogin = _loginStatus;
+  }
+
   get count => _count;//3
   get favorite => _favoriteLists;//3
   get isLogin => _isLogin;//3
   get getUser => _userInfo;//3
-
 }

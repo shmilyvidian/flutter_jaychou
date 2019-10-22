@@ -14,9 +14,10 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> {
   Map data;
   static List lists;
+
   Future _fetchData() async{
     try {
       http.Response response = await http.get("https://www.fastmock.site/mock/ea1ca5ef5df2f1225b6c3e502c1772b6/shmilyvidian/lists");
@@ -33,10 +34,12 @@ class _HomePageState extends State<HomePage>{
   void initState() {
     super.initState();
     _fetchData();
+    print('ente-------');
 
   }
   @override
   Widget build(BuildContext context){
+
     return RefreshIndicator(
         onRefresh: () async {},
         displacement: 20.0,
@@ -47,6 +50,7 @@ class _HomePageState extends State<HomePage>{
             var item = lists[index];
             
             var isFavorite = Provider.of<Counter>(context).favorite.contains(item);
+            print(isFavorite);
             return SizedBox(
               child: GestureDetector(
                 onTap:(){

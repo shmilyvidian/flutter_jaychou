@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../stores/countModel.dart';
-import 'package:provider/provider.dart';
+
 
 class Detail extends StatelessWidget{
   String name;
@@ -8,8 +7,6 @@ class Detail extends StatelessWidget{
   Detail({this.name, this.desc});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    final Counter store = Provider.of<Counter>(context);
     return MaterialApp(
       title: '详情',
       debugShowCheckedModeBanner: false,
@@ -18,16 +15,18 @@ class Detail extends StatelessWidget{
       ),
       home:  Scaffold(
         appBar: AppBar(
+          leading: Container(
+              child: RaisedButton(
+                elevation: 0,
+                color: Colors.orange,
+                child: 
+                  Icon(
+                    Icons.keyboard_arrow_left,                 
+                    color: Colors.white,
+                  ),
+                  onPressed: () {  Navigator.pop(context);},
+                )),
           title: Text('详情'),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.keyboard_arrow_left),
-                tooltip: '返回',
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-            ),
-          ]
         ),
         body:Container (
           padding: EdgeInsets.all(20.0),
