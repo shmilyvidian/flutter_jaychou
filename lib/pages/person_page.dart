@@ -131,14 +131,6 @@ class PersonSetting extends StatelessWidget{
                                         return Login();
                                       },
                                   ));
-
-
-
-//          Navigator.push(context, MaterialPageRoute(
-//              builder: (BuildContext context){
-//                return Login();
-//              }
-//            ));
           },
         child: Text('退出'),
       ) ,
