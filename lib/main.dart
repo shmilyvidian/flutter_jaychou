@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/pages/detail.dart';
-import 'package:flutter_tutorial/pages/home.dart';
-import 'package:provider/provider.dart';
+import 'package:fluro/fluro.dart';
+import './stores/userModel.dart';
 import './stores/countModel.dart';
-import 'login.dart';
+import 'package:provider/provider.dart';
+import './routes/routes.dart';
+import './routes/application.dart';
+import './login.dart';
+import './stores/index.dart' show Store;
 
-void main() => {
-      runApp(ChangeNotifierProvider<Counter>.value(
-        notifier: Counter(1, List(), false),
-        child: MyApp(),
-      ))
-    };
+void main() {
+  final router = Router();
+  Routes.configureRoutes(router);
+  Application.router = router;
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+
+  runApp(Store.init(child:MaterialApp(
       title: 'Jay',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
       home: Login(),
-      routes: {
-        '/login':(BuildContext context) => Login(),
-        '/detail':(BuildContext context) => Detail(),
-        '/home': (BuildContext context) => Home(),
-      },
-      initialRoute: '/login',
-    );
-  }
+      onGenerateRoute: Application.router.generator,
+    ),
+  ) );
 }

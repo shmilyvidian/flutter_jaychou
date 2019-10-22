@@ -3,7 +3,9 @@ import 'package:flutter_tutorial/pages/home.dart';
 import 'package:flutter_tutorial/stores/countModel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import './routes/application.dart';
+import './stores/index.dart' show Store;
+import './stores/userModel.dart';
 class Login extends StatelessWidget{
 
   TextEditingController userController = TextEditingController();
@@ -65,7 +67,8 @@ class Login extends StatelessWidget{
                           ),
                         ),
                       ),
-                      Container(
+                      Store.connect<User>(builder: (context, snapshot, child){
+                        return Container(
                         margin: EdgeInsets.only(top:24.0),
                         width: 370,
                         height: 120,
@@ -95,16 +98,9 @@ class Login extends StatelessWidget{
 
                                 user.setString('USERNAME', userController.text);
                                 user.setString('PASSWORD', passwordController.text);
-                                 Navigator.push(context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                        return Home();
-                                      },
-                                  ));
-
-
-                                store.login(userController.text, passwordController.text);
-
+                                Application.router.navigateTo(context, '/home');
+                                
+                                snapshot.login(userController.text, passwordController.text);
                               },
                               child: Text("登录"),
                               textColor: Colors.white,
@@ -148,7 +144,10 @@ class Login extends StatelessWidget{
 
                           ],
                         ),
+                      );
+                      }
                       )
+                      
                     ],
                   ),
                 )

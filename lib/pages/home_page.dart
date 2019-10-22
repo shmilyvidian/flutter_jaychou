@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../routes/application.dart';
 import '../stores/countModel.dart';
 import 'package:provider/provider.dart';
 import './detail.dart';
@@ -34,8 +35,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _fetchData();
-    print('ente-------');
-
   }
   @override
   Widget build(BuildContext context){
@@ -54,11 +53,7 @@ class _HomePageState extends State<HomePage> {
             return SizedBox(
               child: GestureDetector(
                 onTap:(){
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (BuildContext context){
-                        return Detail(name:item['name'],desc: item['desc']);
-                      }
-                  ));
+                  Application.router.navigateTo(context, '/detail/${item['name']}/${item['desc']}');
                 },
                 child: Card(
                   child: Column(

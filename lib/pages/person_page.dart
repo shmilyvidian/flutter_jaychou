@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/routes/application.dart';
 import '../stores/countModel.dart';
 import 'package:provider/provider.dart';
 import '../login.dart';
@@ -34,21 +35,21 @@ class PersonSetting extends StatelessWidget{
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   CircleAvatar(
                     backgroundImage: AssetImage(
                         'assets/images/headPicture.png'),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 24.0),
+                    margin: EdgeInsets.only(left: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text('${store.getUser['username']??='shmilyvidian'}'),
                         Row(
                           children: <Widget>[
-                            Icon(Icons.verified_user),
+                            Icon(Icons.verified_user, color: Colors.red,),
                             Text('您也是周杰伦粉丝成员之一哟')
                           ],
                         )
@@ -124,13 +125,15 @@ class PersonSetting extends StatelessWidget{
           user.remove('USERNAMEW');
           user.remove('PASSWORD');
           store.setLogin(false);
+          
+          Application.router.navigateTo(this.parentContext, '/login');
 
-         Navigator.push(this.parentContext,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                        return Login();
-                                      },
-                                  ));
+        //  Navigator.push(this.parentContext,
+        //                             MaterialPageRoute(
+        //                               builder: (BuildContext context) {
+        //                                 return Login();
+        //                               },
+        //                           ));
           },
         child: Text('退出'),
       ) ,
