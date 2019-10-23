@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/pages/home_page.dart';
 import 'package:flutter_tutorial/pages/person_page.dart';
+import 'package:flutter_tutorial/pages/stop.dart';
 import '../pages/home_page.dart';
 import '../pages/person_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,11 +60,8 @@ class _MyHomePageState extends State<MyHomePage>{
 
   @override
   Widget build(BuildContext context) {
-    _widgetOptions = <Widget>[HomePage(), PersonPage(parentContext:context)];
+    _widgetOptions = <Widget>[HomePage(),Stop(), PersonPage(parentContext:context)];
     return Scaffold(
-            appBar: AppBar(
-              title: Text(widget.title),
-            ),
             drawer: Drawer(
               child: Container(
                 margin: EdgeInsets.only(top: 50.0),
@@ -99,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage>{
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   title: Text('首页'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.personal_video),
+                  title: Text('广场'),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),

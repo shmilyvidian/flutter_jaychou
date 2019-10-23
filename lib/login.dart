@@ -24,27 +24,29 @@ class Login extends StatelessWidget{
             child:  Column(
               children: <Widget>[
                 Container(
-                  child: Container(
-                    height: 200,
-                    alignment: Alignment.center,
-                    decoration: new BoxDecoration(
-                      color: Colors.blue,
-                      image: new DecorationImage(
-                        image: AssetImage('assets/images/login.jpeg'),
-                        fit: BoxFit.cover,
+                  child: ClipPath (
+                    clipper: BottomClipper(),
+                    child: Container (
+                      height: 240,
+                      alignment: Alignment.center,
+                      decoration: new BoxDecoration(
+                        color: Colors.blue,
+                        image: new DecorationImage(
+                          image: AssetImage('assets/images/login.jpeg'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-
-                  ),
+                  )
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical:32.0, horizontal: 24.0),
+                  margin: EdgeInsets.symmetric(vertical:20.0, horizontal: 24.0),
                   child:  Column(
                     children: <Widget>[
                       Container(
                         child: TextField(
                           controller: userController,
-                          autofocus: false,
+                          autofocus: true,
                           decoration: InputDecoration(
                               labelText: "用户名",
                               hintText: "用户名",
@@ -69,13 +71,15 @@ class Login extends StatelessWidget{
                       ),
                       Store.connect<User>(builder: (context, snapshot, child){
                         return Container(
-                        margin: EdgeInsets.only(top:24.0),
                         width: 370,
                         height: 120,
-                        child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: 
                           Container(
-                          width: 370,
                            child: RaisedButton(
                               onPressed: () async{
                                 SharedPreferences user = await SharedPreferences.getInstance();
@@ -107,9 +111,12 @@ class Login extends StatelessWidget{
                               color: Colors.blue,
                               highlightColor: Color(0xff00ff00),
                             )
-                          ),
+                          ),),
+                          Container(width: 24,),
+                           Expanded(
+                            flex: 1,
+                            child: 
                             Container(
-                              width: 370,
                               child: RaisedButton(
                                 onPressed: () async{
                                   SharedPreferences user = await SharedPreferences.getInstance();
@@ -140,7 +147,7 @@ class Login extends StatelessWidget{
                                 color: Colors.white,
                                 highlightColor: Color(0xff00ff00),
                               ),
-                            )
+                            ),)
 
                           ],
                         ),
@@ -156,5 +163,31 @@ class Login extends StatelessWidget{
         ),)
       ),
     );
+  }
+}
+
+class BottomClipper extends CustomClipper<Path>{
+
+  @override
+  Path getClip(Size size){
+    var path = Path();
+    path.lineTo(0, 0); //第1个点
+    path.lineTo(0, size.height-30.0); //第2个点
+    var firstControlPoint = Offset(size.width/2, size.height);
+    var firstEdnPoint = Offset(size.width, size.height-30.0);
+    path.quadraticBezierTo(
+      firstControlPoint.dx, 
+      firstControlPoint.dy, 
+      firstEdnPoint.dx, 
+      firstEdnPoint.dy
+    );
+    path.lineTo(size.width, size.height-30.0); //第3个点
+    path.lineTo(size.width, 0); //第4个点
+
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

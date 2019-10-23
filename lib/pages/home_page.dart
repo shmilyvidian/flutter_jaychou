@@ -39,7 +39,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context){
 
-    return RefreshIndicator(
+    return Scaffold(
+      appBar: AppBar(
+          title: Text('Jay Chou'),
+        ),
+        body:  RefreshIndicator(
         onRefresh: () async {},
         displacement: 20.0,
         backgroundColor: Colors.blue,
@@ -56,11 +60,11 @@ class _HomePageState extends State<HomePage> {
                   Application.router.navigateTo(context, '/detail/${item['name']}/${item['desc']}');
                 },
                 child: Card(
+                  margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: const EdgeInsets.only(top:10.0),
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4.0),
                         ),
@@ -71,8 +75,14 @@ class _HomePageState extends State<HomePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text("专辑名：${item['name']}"),
-                            Text("${item['time']}"),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                              Text("专辑名：${item['name']}"),
+                              Container(height: 10,),
+                              Text("发行时间：${item['time']}"),
+                            ],),
                             FlatButton(
                               child: Row(
                                 children: <Widget>[
@@ -100,6 +110,7 @@ class _HomePageState extends State<HomePage> {
             )
             ;
           },)
+    ),
     );
   }
 }
