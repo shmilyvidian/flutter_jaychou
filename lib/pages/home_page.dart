@@ -38,7 +38,8 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context){
-
+    var args = ModalRoute.of(context).settings.arguments;
+    print('argument-------: $args');
     return Scaffold(
       appBar: AppBar(
           title: Text('Jay Chou'),
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
             return SizedBox(
               child: GestureDetector(
                 onTap:(){
-                  Application.router.navigateTo(context, '/detail/${item['name']}/${item['desc']}');
+                  Application.router.navigateTo(context, '/detail/${item['name']}/${item['desc']}').then((onValue)=>print(onValue));
                 },
                 child: Card(
                   margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),

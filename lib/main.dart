@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:flutter_tutorial/components/splash.dart';
 import './stores/userModel.dart';
 import './stores/countModel.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: Login(),
+      home: StartApp(),
       onGenerateRoute: Application.router.generator,
     ),
   ) );

@@ -29,7 +29,7 @@ dependencies:
   shared_preferences: 0.5.3+5
   fluro: 1.5.1
   flutter_swiper: ^1.0.6
-  
+  url_launcher: 5.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -50,6 +50,7 @@ flutter:
   assets:
     - assets/images/headPicture.png
     - assets/images/login.jpeg
+    - assets/images/splash.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

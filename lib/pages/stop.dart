@@ -134,16 +134,7 @@ class Stop extends StatelessWidget{
                         })
                 ),
               ),
-               Container(
-                margin: EdgeInsets.only(top:24.0),
-                alignment: Alignment.topLeft,
-                child: Row(
-                  children: <Widget>[
-                    Icon(Icons.list, color: Colors.orange,),
-                    Text('设置', textAlign: TextAlign.left,)
-                  ],
-                ),
-              ),
+              
 
             
             ],

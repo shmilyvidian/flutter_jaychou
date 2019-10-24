@@ -24,7 +24,7 @@ class Detail extends StatelessWidget{
                     Icons.keyboard_arrow_left,                 
                     color: Colors.white,
                   ),
-                  onPressed: () {  Navigator.pop(context);},
+                  onPressed: () {  Navigator.pop(context,'from detail');},
                 )),
           title: Text('详情'),
         ),

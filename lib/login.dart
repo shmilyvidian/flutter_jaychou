@@ -1,19 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/pages/home.dart';
 import 'package:flutter_tutorial/stores/countModel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './routes/application.dart';
 import './stores/index.dart' show Store;
 import './stores/userModel.dart';
-class Login extends StatelessWidget{
+import 'package:flutter/animation.dart';
+
+class Login extends StatefulWidget {
+  @override
+    _ScaleAnimationRouteState createState() {
+    // TODO: implement createState
+    return _ScaleAnimationRouteState();
+  }
+}
+
+class _ScaleAnimationRouteState extends State<Login> with SingleTickerProviderStateMixin{
 
   TextEditingController userController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  Animation animation, delayedAnimation;
+  AnimationController controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    animation = new Tween(begin: 100.0, end: 240.0).animate(CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeIn
+    ));
+
+    delayedAnimation = Tween(begin: -1.0, end: 0.0).animate(CurvedAnimation(
+        parent: controller,
+        curve: Interval(
+          0.5, 1.0, curve:  Curves.fastOutSlowIn
+        )
+    ))..addListener((){
+      setState(() {
+
+      });
+    });
+//    ..addListener(() {
+//    setState(() {
+//    // the state that has changed here is the animation object’s value
+//    });
+//    });
+    controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<Counter>(context);
+    var width = MediaQuery.of(context).size.width;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: '登录',
@@ -26,22 +67,27 @@ class Login extends StatelessWidget{
                 Container(
                   child: ClipPath (
                     clipper: BottomClipper(),
-                    child: Container (
-                      height: 240,
-                      alignment: Alignment.center,
-                      decoration: new BoxDecoration(
-                        color: Colors.blue,
-                        image: new DecorationImage(
-                          image: AssetImage('assets/images/login.jpeg'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                    child: AnimatedBuilder(
+                        animation: controller,
+                        builder:(BuildContext context, child){
+                          return Container (
+                            height: animation.value,
+                            alignment: Alignment.center,
+                            decoration: new BoxDecoration(
+                              color: Colors.blue,
+                              image: new DecorationImage(
+                                image: AssetImage('assets/images/login.jpeg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        }
+                    )
                   )
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical:20.0, horizontal: 24.0),
-                  child:  Column(
+                  child: Column(
                     children: <Widget>[
                       Container(
                         child: TextField(
@@ -70,7 +116,9 @@ class Login extends StatelessWidget{
                         ),
                       ),
                       Store.connect<User>(builder: (context, snapshot, child){
-                        return Container(
+                        return  Transform(
+                          transform: Matrix4.translationValues(delayedAnimation.value * width, 0.0, 0.0),
+                          child:  Container(
                         width: 370,
                         height: 120,
                         child: Row(
@@ -80,6 +128,7 @@ class Login extends StatelessWidget{
                             flex: 1,
                             child: 
                           Container(
+                                                          height: 50,
                            child: RaisedButton(
                               onPressed: () async{
                                 SharedPreferences user = await SharedPreferences.getInstance();
@@ -100,11 +149,13 @@ class Login extends StatelessWidget{
                                   return;
                                 }
 
+                                snapshot.login(userController.text, passwordController.text);
+
                                 user.setString('USERNAME', userController.text);
                                 user.setString('PASSWORD', passwordController.text);
+                                controller.dispose();
                                 Application.router.navigateTo(context, '/home');
                                 
-                                snapshot.login(userController.text, passwordController.text);
                               },
                               child: Text("登录"),
                               textColor: Colors.white,
@@ -117,6 +168,7 @@ class Login extends StatelessWidget{
                             flex: 1,
                             child: 
                             Container(
+                              height: 50,
                               child: RaisedButton(
                                 onPressed: () async{
                                   SharedPreferences user = await SharedPreferences.getInstance();
@@ -151,7 +203,7 @@ class Login extends StatelessWidget{
 
                           ],
                         ),
-                      );
+                      ),);
                       }
                       )
                       

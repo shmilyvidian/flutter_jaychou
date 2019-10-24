@@ -5,7 +5,7 @@ import 'package:flutter_tutorial/routes/application.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../stores/countModel.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class PersonPage extends StatelessWidget {
   final BuildContext parentContext;
   PersonPage({this.parentContext});
@@ -72,7 +72,7 @@ class PersonSetting extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    color: Colors.orangeAccent, // 底色
+                    // color: Colors.orangeAccent, // 底色
                     borderRadius: BorderRadius.circular(2.0),
                   ),
                   child: Row(
@@ -81,7 +81,7 @@ class PersonSetting extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text('688'),
+                        Text('268'),
                         Row(children:<Widget>[ Icon(Icons.face),Text('好友'),])
                       ],
                     ),
@@ -122,13 +122,28 @@ class PersonSetting extends StatelessWidget {
                         title: Text('帮助'),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                        onTap: () async{
+                          String url = 'tel:18129957362';
+                          //判断是否可以拨打电话
+                          if(await canLaunch(url)){
+                            await launch(url);
+                          }else{
+                            throw '手机号异常，不能拨打电话';
+                          }
+                        },
                       ),
-                      ListTile(
-                        title: Text('版本'),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                      ),
-                     
+                      Listener(child:  
+                        ListTile(
+                          title: Text('版本'),
+                          trailing: Icon(Icons.keyboard_arrow_right),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                        ),
+                        onPointerDown: (event)=>print('down $event'),
+                        onPointerUp: (event)=>print('up $event'),
+                        onPointerMove: (event)=>print('move $event'),
+                        onPointerCancel: (event)=>print('cancel $event'),
+
+                     )
                     ]).toList(),
                   ),
                 ),
