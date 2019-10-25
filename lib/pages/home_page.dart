@@ -6,6 +6,7 @@ import './detail.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'dart:math';
 
 class HomePage extends StatefulWidget {
 
@@ -39,7 +40,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context){
     var args = ModalRoute.of(context).settings.arguments;
-    print('argument-------: $args');
     return Scaffold(
       appBar: AppBar(
           title: Text('Jay Chou'),
@@ -52,9 +52,13 @@ class _HomePageState extends State<HomePage> {
           itemCount: lists == null ? 0 : lists.length,
           itemBuilder: (BuildContext context, int index){
             var item = lists[index];
-            
+            final List<Widget> starLists =  [];
+            print(Random().nextInt(5).ceil());
+            for(var i = 0; i < ((Random().nextInt(5))).ceil()+1; i++){
+              starLists.add(Icon(Icons.star, color: Colors.orange));
+
+            }
             var isFavorite = Provider.of<Counter>(context).favorite.contains(item);
-            print(isFavorite);
             return SizedBox(
               child: GestureDetector(
                 onTap:(){
@@ -64,12 +68,23 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
                   child: Column(
                     children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: Image.network(item['imgurl'], fit: BoxFit.fill,repeat:ImageRepeat.repeatX),
+                      Stack(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                            child: Image.network(item['imgurl'], fit: BoxFit.fill,repeat:ImageRepeat.repeatX),
+                          ),
+                          Positioned(
+                            top: 10.0,
+                            left: 10.0,
+                            child: Row(
+                              children: starLists,
+                            ),
+                          )
+                        ],
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),

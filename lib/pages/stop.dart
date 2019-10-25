@@ -6,12 +6,12 @@ import 'package:flutter_tutorial/components/swiper.dart';
 import 'package:provider/provider.dart';
 import '../stores/countModel.dart';
 
-
-class Stop extends StatelessWidget{
+class Stop extends StatelessWidget {
   List<String> getDataList() {
-    List<String> list = ['专辑','演唱会','收藏','专辑','演唱会','收藏','演唱会','收藏'];
+    List<String> list = ['专辑', '演唱会', '收藏', '专辑', '演唱会', '收藏', '演唱会', '收藏'];
     return list;
   }
+
   List<Widget> getWidgetList() {
     return getDataList().map((item) => getItemContainer(item)).toList();
   }
@@ -30,10 +30,10 @@ class Stop extends StatelessWidget{
           ),
           child: Icon(Icons.personal_video),
         ),
-        
-        Text(item, style: TextStyle(
-          fontSize: 12.0
-        ),),
+        Text(
+          item,
+          style: TextStyle(fontSize: 12.0),
+        ),
       ],
     );
   }
@@ -41,7 +41,7 @@ class Stop extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<Counter>(context);
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.orange,
@@ -58,8 +58,8 @@ class Stop extends StatelessWidget{
               Container(
                 // margin: EdgeInsets.all(16.0),
                 height: 195.0,
-                child:
-                GridView.count(
+                child: GridView.count(
+                  physics: new NeverScrollableScrollPhysics(),
                   //水平子Widget之间间距
                   crossAxisSpacing: 20.0,
                   //垂直子Widget之间间距
@@ -72,71 +72,70 @@ class Stop extends StatelessWidget{
                   childAspectRatio: 1.1,
                   //子Widget列表
                   children: getWidgetList(),
-                ), ),
-                 Container(
-                                            margin: EdgeInsets.all(10.0),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10.0),
                 alignment: Alignment.topLeft,
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.list, color: Colors.orange,),
+                    Icon(
+                      Icons.list,
+                      color: Colors.orange,
+                    ),
                     Container(
                       margin: EdgeInsets.only(left: 8.0),
-                      child: Text('你的收藏', textAlign: TextAlign.left,),
+                      child: Text(
+                        '你的收藏',
+                        textAlign: TextAlign.left,
+                      ),
                     )
-                    
                   ],
                 ),
               ),
-                Container(
+              Container(
                 margin: EdgeInsets.all(10.0),
-                height:  500,
-                child: (
-                    store.favorite.length == 0 ?
-                    Container(
-                      alignment: Alignment.topLeft,
-                      child: Text('暂无喜欢，你可以从首页添加收藏哟。'),
-                    )  :
-                    ListView.builder(
+                height: 500,
+                child: (store.favorite.length == 0
+                    ? Container(
+                        alignment: Alignment.topLeft,
+                        child: Text('暂无喜欢，你可以从首页添加收藏哟。'),
+                      )
+                    : ListView.builder(
                         itemCount: store.favorite.length,
-                        itemBuilder: (BuildContext context, int index){
+                        itemBuilder: (BuildContext context, int index) {
                           var item = store.favorite[index];
-                          return(
-                             Row(
-                               crossAxisAlignment: CrossAxisAlignment.center,
-                               mainAxisAlignment: MainAxisAlignment.start,
-                               children: <Widget>[
-                                 Container(
-                                   width:90,
-                                   height:60,
-                                   margin: EdgeInsets.only(top: 10.0, right: 24.0),
-                                   decoration: BoxDecoration(
-                                     border: Border.all(color: Colors.grey, width: 1.0),
-                                    borderRadius: BorderRadius.circular(4.0),
-                                   ),
-                                   child: Image.network(
-                                     item['imgurl'],
-                                     height: 60,
-                                     width: 90,
-                                     fit: BoxFit.cover,
-                                   ),
-                                 ),
-                                 Column(
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                   children: <Widget>[
-                                     Text('专辑名： ${item['name']}'),
-                                     Text('发行时间： ${item['time']}'),
-                                   ],
-                                 )
-
-                               ],
-                             )
-                          );
-                        })
-                ),
+                          return (Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: 90,
+                                height: 60,
+                                margin: EdgeInsets.only(top: 10.0, right: 24.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.grey, width: 1.0),
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                                child: Image.network(
+                                  item['imgurl'],
+                                  height: 60,
+                                  width: 90,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('专辑名： ${item['name']}'),
+                                  Text('发行时间： ${item['time']}'),
+                                ],
+                              )
+                            ],
+                          ));
+                        })),
               ),
-              
-
-            
             ],
           ),
         ),
