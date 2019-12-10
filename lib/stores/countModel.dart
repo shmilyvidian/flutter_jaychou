@@ -1,12 +1,15 @@
-import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_tutorial/models/resModel/responese_model.dart';
+import 'package:flutter_tutorial/utils/httpRequest.dart';
 
 class Counter with ChangeNotifier {//1
   bool _isLogin = false;
   int _count;
   List _favoriteLists = [];
   Map _userInfo = {};
-  Counter(this._count, this._favoriteLists, this._isLogin);
+  List _lists = [];
+
+  Counter(this._count, this._favoriteLists, this._isLogin, this._lists);
   void add() {
     _count++;
     notifyListeners();//2
@@ -21,18 +24,21 @@ class Counter with ChangeNotifier {//1
     notifyListeners();//2
   }
 
-  void login(String username, String password){
+  void login(String username, String password) async{
     _isLogin = true;
     _userInfo['username'] = username;
     _userInfo['password'] = password;
+    
     notifyListeners();
   }
   void setLogin(bool _loginStatus){
     _isLogin = _loginStatus;
   }
 
-  get count => _count;//3
-  get favorite => _favoriteLists;//3
-  get isLogin => _isLogin;//3
-  get getUser => _userInfo;//3
+
+  get count => _count;
+  get favorite => _favoriteLists;
+  get isLogin => _isLogin;
+  get getUser => _userInfo;
+  get getList => _lists;
 }

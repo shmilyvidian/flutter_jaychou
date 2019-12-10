@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_tutorial/components/splash.dart';
-import './stores/userModel.dart';
-import './stores/countModel.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_tutorial/utils/locale_util.dart';
+import 'package:flutter_tutorial/utils/translations.dart';
 import './routes/routes.dart';
 import './routes/application.dart';
-import './login.dart';
 import './stores/index.dart' show Store;
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 void main() {
   final router = Router();
   Routes.configureRoutes(router);
@@ -21,6 +19,12 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
+    localizationsDelegates: [
+      const TranslationsDelegate(),
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ],
+    supportedLocales: localeUtil.supportedLocales(),
       home: StartApp(),
       onGenerateRoute: Application.router.generator,
     ),

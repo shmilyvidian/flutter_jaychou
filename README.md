@@ -28,3 +28,4 @@ A new Flutter project about Jay Chou
         children: _widgetOptions,
     )
     ```
+- flutter packages pub run build_runner build

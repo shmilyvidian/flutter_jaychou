@@ -14,7 +14,6 @@ class Routes {
     router.define( login, handler: Handler(handlerFunc : (context, parameters) => Login()));
     router.define( home, handler: Handler(handlerFunc : (context, parameters) => Home()));    
     router.define( detail, handler: Handler(handlerFunc : (context, parameters){
-      print(parameters);
       String name = parameters['name'].first;
       String desc = parameters['desc'].first;
       return Detail(name:name,desc:desc);

@@ -34,7 +34,6 @@ class _MyHomePageState extends State<MyHomePage>{
   List<Widget> _widgetOptions;
   num _selectedIndex = 0;
   bool isUserLogin = false;
-  @override 
 
   void _onItemTapped(int index) {
     setState(() {
@@ -62,32 +61,6 @@ class _MyHomePageState extends State<MyHomePage>{
   Widget build(BuildContext context) {
     _widgetOptions = <Widget>[HomePage(),Stop(), PersonPage(parentContext:context)];
     return Scaffold(
-            drawer: Drawer(
-              child: Container(
-                margin: EdgeInsets.only(top: 50.0),
-                child: new ListView(
-                    padding: const EdgeInsets.only(),
-                    children: <Widget>[
-                      new ClipRect(
-                        child: new ListTile(
-                          leading: new CircleAvatar(child: new Text("A")),
-                          title: new Text('admin'),
-                          onTap: () => {},
-                        ),
-                      ),
-                      new ListTile(
-                          leading: new CircleAvatar(child: new Text("S")),
-                          title: new Text('Jay Chou'),
-                          subtitle:
-                              new Text("Application about Jay Chou in flutter"),
-                          onTap: () => {}),
-                      new AboutListTile(
-                        icon: new CircleAvatar(child: new Text("A")),
-                        child: new Text("shmilyvidian"),
-                      ),
-                    ]),
-              ),
-            ),
             body: IndexedStack(
               index: _selectedIndex,
               children: _widgetOptions,
@@ -100,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage>{
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.personal_video),
-                  title: Text('广场'),
+                  title: Text('Jay'),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),

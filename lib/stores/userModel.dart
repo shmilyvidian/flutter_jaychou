@@ -1,16 +1,33 @@
 import 'package:flutter/foundation.dart';
-
+import 'package:flutter_tutorial/models/resModel/responese_model.dart';
+import 'package:flutter_tutorial/utils/httpRequest.dart';
 class User with ChangeNotifier {
   bool _isLogin = false;
 
   Map _userInfo = {};
 
-  void login(String username, String password){
-    print('success');
+   Future login (String account, String password, int type) async {
+    
     _isLogin = true;
-    _userInfo['username'] = username;
+    _userInfo['username'] = account;
     _userInfo['password'] = password;
+    String url = type == 0 ? '/login' : '/register';
+
+    var res = await HttpUtils.request(
+        url,
+        method: HttpUtils.POST,
+        data: {
+          "password": password,
+          "account": account
+        }
+    );
+    
+    Responese result = Responese.fromJson(res);
+
+   
+
     notifyListeners();
+    return result.data;
   }
 
   void setLogin(bool _loginStatus){

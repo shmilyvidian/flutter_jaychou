@@ -14,7 +14,7 @@ class SwiperPageState extends State<SwiperPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal:10.0,vertical: 2.0),
         width: MediaQuery.of(context).size.width,
-        height: 220.0,
+        height: 210.0,
         child: Swiper(
           itemBuilder: _swiperBuilder,
           itemCount: 3,

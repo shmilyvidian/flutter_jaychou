@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class Detail extends StatelessWidget{
-  String name;
-  String desc;
+  final String name;
+  final String desc;
   Detail({this.name, this.desc});
   @override
   Widget build(BuildContext context) {

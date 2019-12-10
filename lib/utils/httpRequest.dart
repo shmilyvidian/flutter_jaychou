@@ -1,80 +1,84 @@
-// import 'package:dio/dio.dart';
+import 'dart:developer';
 
-// class HttpUtils {
+import 'package:dio/dio.dart';
+import 'dart:async';
+import 'dart:convert';
 
-//   /// global dio object
-//   static Dio dio;
+import 'package:flutter_tutorial/models/resModel/responese_model.dart';
+class HttpUtils {
 
-//   /// default options
-//   static const String API_PREFIX = 'https://www.easy-mock.com/mock/5daaa42b535c0573eacc1bcc/vidiian_copy';
-//   static const int CONNECT_TIMEOUT = 10000;
-//   static const int RECEIVE_TIMEOUT = 3000;
+  /// global dio object
+  static Dio dio;
 
-//   /// http request methods
-//   static const String GET = 'get';
-//   static const String POST = 'post';
-//   static const String PUT = 'put';
-//   static const String PATCH = 'patch';
-//   static const String DELETE = 'delete';
+  /// default options
+  static const String API_PREFIX = 'http://localhost:3000'; //https://www.fastmock.site/mock/ea1ca5ef5df2f1225b6c3e502c1772b6/shmilyvidian/
+  static const int CONNECT_TIMEOUT = 10000;
+  static const int RECEIVE_TIMEOUT = 3000;
 
-//   /// request method
-//   static Future<Map> request (
-//     String url, 
-//     { data, method }) async {
+  /// http request methods
+  static const String GET = 'get';
+  static const String POST = 'post';
+  static const String PUT = 'put';
+  static const String PATCH = 'patch';
+  static const String DELETE = 'delete';
 
-//     data = data ?? {};
-//     method = method ?? 'GET';
+  /// request method
+  static Future request (
+      String url,
+      { data, method }) async {
 
-//     /// restful 请求处理   
-//     /// /gysw/search/hist/:user_id        user_id=27
-//     /// 最终生成 url 为     /gysw/search/hist/27
-//     data.forEach((key, value) {
-//       if (url.indexOf(key) != -1) {
-//         url = url.replaceAll(':$key', value.toString());
-//       }
-//     });
+    data = (data) ?? {};
+    method = method ?? 'GET';
+    print(data);
 
-//     /// 打印请求相关信息：请求地址、请求方式、请求参数
-//     print('请求地址：【' + method + '  ' + url + '】');
-//     print('请求参数：' + data.toString());
+    data.forEach((key, value) {
+      print(url);
+      print(key);
 
-//     Dio dio = createInstance();
-//     var result;
+      if (url.indexOf(key) != -1) {
+        url = url.replaceAll(':$key', value.toString());
+      }
+    });
 
-//     try {
-//       Response response = await dio.request(url, data: data, options: new Options(method: method));
+    /// 打印请求相关信息：请求地址、请求方式、请求参数
+    print('请求地址：【' + method + '  ' + url + '】');
+    print('请求参数：' + data.toString());
 
-//       result = response.data;
+    Dio dio = createInstance();
+    var result;
+    
+    try {
+      Response response = await dio.request(url, data: data, options: new Options(method: method));
+      result = response.data;
+      
+      } on DioError catch (e) {
+      /// 打印请求失败相关信息
+      print('请求出错：' + e.toString());
+    }
+     
+    return result;
 
-//       /// 打印响应相关信息
-//       print('响应数据：' + response.toString());
-//     } on DioError catch (e) {
-//       /// 打印请求失败相关信息
-//       print('请求出错：' + e.toString());
-//     } 
+  }
 
-//     return result;
-//   }
+  /// 创建 dio 实例对象
+  static Dio createInstance () {
+    if (dio == null) {
+      /// 全局属性：请求前缀、连接超时时间、响应超时时间
+      BaseOptions options = new BaseOptions(
+        baseUrl: API_PREFIX,
+        connectTimeout: CONNECT_TIMEOUT,
+        receiveTimeout: RECEIVE_TIMEOUT,
+      );
 
-//   /// 创建 dio 实例对象
-//   static Dio createInstance () {
-//     if (dio == null) {
-//       /// 全局属性：请求前缀、连接超时时间、响应超时时间
-//       Options options = new Options(
-//           baseUrl: API_PREFIX,
-//           connectTimeout: CONNECT_TIMEOUT,
-//           receiveTimeout: RECEIVE_TIMEOUT,
-//       );
+      dio = new Dio(options);
+    }
 
-//       dio = new Dio(options);
-//     }
+    return dio;
+  }
 
-//     return dio;
-//   }
+  /// 清空 dio 对象
+  static clear () {
+    dio = null;
+  }
 
-//   /// 清空 dio 对象
-//   static clear () {
-//     dio = null;
-//   }
-
-// }
+}

@@ -27,9 +27,66 @@ class PersonPage extends StatelessWidget {
 class PersonSetting extends StatelessWidget {
   final BuildContext parentContext;
   PersonSetting({this.parentContext});
-  @override
+  Widget buildListData(BuildContext context, String titleItem, Icon iconItem, String subTitleItem) {
+    return new ListTile(
+      leading: iconItem,
+      title: new Text(
+        titleItem,
+        style: TextStyle(fontSize: 16),
+      ),
+      subtitle: new Text(
+        subTitleItem,
+      ),
+      trailing: new Icon(Icons.keyboard_arrow_right),
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return new AlertDialog(
+              title: new Text(
+                '点赞',
+                style: new TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+              ),
+              content: new Text('为周杰伦加油:$titleItem'),
+            );
+          },
+        );
+      },
+
+    );
+  }
+
+  // 数据源
+  List<String> titleItems = <String>[
+    '为周杰伦打call', '歌词接龙',
+    '给周杰伦送花', '送花加经验',
+    '每日签到','深圳演唱会预售中'
+  ];
+
+  List<Icon> iconItems = <Icon>[
+    new Icon(Icons.favorite), new Icon(Icons.print),
+    new Icon(Icons.card_giftcard), new Icon(Icons.pages),
+    new Icon(Icons.zoom_out_map), new Icon(Icons.alarm),
+  ];
+
+  List<String> subTitleItems = <String>[
+    '今天你为周杰伦点赞了吗？', '你对周杰伦的歌词多熟悉？',
+    '每日送花，向周杰伦表达爱意', '每送花一人加50经验',
+    '每日签到有奖励', '多久没去现场听歌了'
+  ];
+
+   
   Widget build(BuildContext context) {
     var store = Provider.of<Counter>(context);
+     List<Widget> _list = [];
+    for (int i = 0; i < titleItems.length; i++) {
+      _list.add(buildListData(context, titleItems[i], iconItems[i], subTitleItems[i]));
+    }
+    // 分割线
+    var divideTiles = ListTile.divideTiles(context: context, tiles: _list).toList();
     return Scaffold(
 //      appBar: AppBar(
 //        title: Text('个人中心'),
@@ -147,118 +204,80 @@ class PersonSetting extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(20.0, 215.0, 20.0, 0),
-            padding: EdgeInsets.all(20.0),
-            alignment: Alignment.topCenter,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.blueGrey,
-                    offset: Offset(2.0, 2.0),
-                    blurRadius: 4.0,
-                    spreadRadius: 2.0),
-              ],
-            ),
-            child: ListView(
-              physics: new NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              children: ListTile.divideTiles(context: context, tiles: [
-                ListTile(
-                  title: Text('收藏'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                ),
-                ListTile(
-                  title: Text('设置'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                ),
-                ListTile(
-                  title: Text('帮助'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                  onTap: () async {
-                    String url = 'tel:18129957362';
-                    //判断是否可以拨打电话
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw '手机号异常，不能拨打电话';
-                    }
-                  },
-                ),
-                ListTile(
-                  title: Text('帮助'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                  onTap: () async {
-                    String url = 'tel:18129957362';
-                    //判断是否可以拨打电话
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw '手机号异常，不能拨打电话';
-                    }
-                  },
-                ),
-                ListTile(
-                  title: Text('帮助'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                  onTap: () async {
-                    String url = 'tel:18129957362';
-                    //判断是否可以拨打电话
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw '手机号异常，不能拨打电话';
-                    }
-                  },
-                ),
-                ListTile(
-                  title: Text('帮助'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                  onTap: () async {
-                    String url = 'tel:18129957362';
-                    //判断是否可以拨打电话
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw '手机号异常，不能拨打电话';
-                    }
-                  },
-                ),
-                ListTile(
-                  title: Text('帮助'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                  onTap: () async {
-                    String url = 'tel:18129957362';
-                    //判断是否可以拨打电话
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw '手机号异常，不能拨打电话';
-                    }
-                  },
-                ),
-                Listener(
-                  child: ListTile(
-                    title: Text('版本'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+              margin: EdgeInsets.fromLTRB(20.0, 215.0, 20.0, 0),
+              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              alignment: Alignment.topCenter,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.blueGrey,
+                      offset: Offset(1.0, 1.0),
+                      blurRadius: 6.0,
+                      spreadRadius: 1.0),
+                ],
+              ),
+              child: Column(
+                children: <Widget>[
+                   Container(
+                    padding: EdgeInsets.all(0),
+                    margin: EdgeInsets.all(0),
+                    height: 550,
+                    child:  ListView.separated(
+                        itemBuilder: (context, item) {
+                          return buildListData(context, titleItems[item], iconItems[item], subTitleItems[item]);
+                        },
+                        separatorBuilder: (BuildContext context, int index) => new Divider(),
+                        itemCount: iconItems.length
+                    ),  
                   ),
-                  onPointerDown: (event) => print('down $event'),
-                  onPointerUp: (event) => print('up $event'),
-                  onPointerMove: (event) => print('move $event'),
-                  onPointerCancel: (event) => print('cancel $event'),
-                )
-              ]).toList(),
-            ),
-          ),
+                //  ListView(
+                //       physics: new NeverScrollableScrollPhysics(),
+                //       shrinkWrap: true,
+                //       padding: EdgeInsets.all(0.0),
+                //       children: ListTile.divideTiles(context: context, tiles: [
+                //         ListTile(
+                //           title: Text('个人收藏'),
+                //           trailing: Icon(Icons.keyboard_arrow_right),
+                //           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                //         ),
+                //         ListTile(
+                //           title: Text('设置'),
+                //           trailing: Icon(Icons.keyboard_arrow_right),
+                //           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                //         ),
+                //         ListTile(
+                //           title: Text('帮助'),
+                //           trailing: Icon(Icons.keyboard_arrow_right),
+                //           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                //           onTap: () async {
+                //             String url = 'tel:18129957362';
+                //             //判断是否可以拨打电话
+                //             if (await canLaunch(url)) {
+                //               await launch(url);
+                //             } else {
+                //               throw '手机号异常，不能拨打电话';
+                //             }
+                //           },
+                //         ),
+                //         Listener(
+                //           child: ListTile(
+                //             title: Text('版本'),
+                //             trailing: Icon(Icons.keyboard_arrow_right),
+                //             contentPadding:
+                //                 EdgeInsets.symmetric(horizontal: 0.0),
+                //           ),
+                //           onPointerDown: (event) => print('down $event'),
+                //           onPointerUp: (event) => print('up $event'),
+                //           onPointerMove: (event) => print('move $event'),
+                //           onPointerCancel: (event) => print('cancel $event'),
+                //         )
+                //       ]).toList(),
+                //     ),
+                 
+                ],
+              )),
         ],
       )),
       floatingActionButton: FloatingActionButton(

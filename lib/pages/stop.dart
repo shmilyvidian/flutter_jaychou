@@ -1,22 +1,28 @@
-import 'dart:ffi';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_tutorial/components/swiper.dart';
 import 'package:provider/provider.dart';
 import '../stores/countModel.dart';
 
 class Stop extends StatelessWidget {
   List<String> getDataList() {
-    List<String> list = ['专辑', '演唱会', '收藏', '专辑', '演唱会', '收藏', '演唱会', '收藏'];
+    List<String> list = ['任务', '一键送花', '排行榜', 'VIP', '抽奖', '相册', '论坛通知', '喜欢'];
     return list;
   }
 
   List<Widget> getWidgetList() {
-    return getDataList().map((item) => getItemContainer(item)).toList();
+    return getDataList().asMap().keys.map((i) => getItemContainer(i, getDataList()[i])).toList();
+    // return getDataList().map((item) => getItemContainer(item)).toList();
   }
 
-  Widget getItemContainer(String item) {
+  List<Icon> iconItems = <Icon>[
+    new Icon(Icons.transform), new Icon(Icons.print),
+    new Icon(Icons.card_giftcard), new Icon(Icons.verified_user),
+    new Icon(Icons.zoom_out_map), new Icon(Icons.alarm),
+     new Icon(Icons.zoom_out_map), new Icon(Icons.favorite),
+  ];
+
+  Widget getItemContainer(i, item) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -28,7 +34,7 @@ class Stop extends StatelessWidget {
             shape: BoxShape.circle,
             color: Colors.red,
           ),
-          child: Icon(Icons.personal_video),
+          child: iconItems[i],
         ),
         Text(
           item,
